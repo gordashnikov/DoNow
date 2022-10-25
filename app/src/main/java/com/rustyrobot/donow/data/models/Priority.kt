@@ -7,7 +7,7 @@ import com.rustyrobot.donow.ui.theme.MediumPriorityColor
 import com.rustyrobot.donow.ui.theme.NonePriorityColor
 
 
-enum class Priority(color: Color) {
+enum class Priority(val color: Color) {
     HIGH(HighPriorityColor),
     MEDIUM(MediumPriorityColor),
     LOW(LowPriorityColor),
