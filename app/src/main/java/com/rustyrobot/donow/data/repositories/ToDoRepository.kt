@@ -2,8 +2,9 @@ package com.rustyrobot.donow.data.repositories
 
 import com.rustyrobot.donow.data.ToDoDao
 import com.rustyrobot.donow.data.models.ToDoTask
+import dagger.hilt.android.scopes.ViewModelScoped
 import javax.inject.Inject
-
+@ViewModelScoped
 class ToDoRepository @Inject constructor(private val toDoDao: ToDoDao) {
 
     fun getAllTasks() = toDoDao.getAllTasks()
