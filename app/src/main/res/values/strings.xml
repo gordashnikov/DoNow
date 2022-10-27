@@ -8,5 +8,7 @@
     <string name="sort_tasks">Sort tasks</string>
     <string name="tasks">Tasks</string>
     <string name="close_icon">Close icon</string>
+    <string name="sad_face_message">Sad face message</string>
+    <string name="no_task_found">No tasks found</string>
 
 </resources>

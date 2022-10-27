@@ -1,5 +1,6 @@
 package com.rustyrobot.donow.data.navigation
 
+import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import androidx.navigation.NavHostController
@@ -8,7 +9,7 @@ import com.rustyrobot.donow.data.navigation.destinations.listComposable
 import com.rustyrobot.donow.data.navigation.destinations.taskComposable
 import com.rustyrobot.donow.ui.viewmodels.SharedViewModel
 import com.rustyrobot.donow.util.Constants.LIST_SCREEN
-
+@ExperimentalMaterialApi
 @Composable
 fun SetupNavigation(navController: NavHostController, sharedViewModel: SharedViewModel) {
     val screen = remember(navController) {
