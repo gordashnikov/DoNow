@@ -9,6 +9,7 @@ import com.rustyrobot.donow.data.navigation.destinations.listComposable
 import com.rustyrobot.donow.data.navigation.destinations.taskComposable
 import com.rustyrobot.donow.ui.viewmodels.SharedViewModel
 import com.rustyrobot.donow.util.Constants.LIST_SCREEN
+
 @ExperimentalMaterialApi
 @Composable
 fun SetupNavigation(navController: NavHostController, sharedViewModel: SharedViewModel) {
@@ -17,6 +18,6 @@ fun SetupNavigation(navController: NavHostController, sharedViewModel: SharedVie
     }
     NavHost(navController = navController, startDestination = LIST_SCREEN) {
         listComposable(navigateToTaskScreen = screen.task, sharedViewModel = sharedViewModel)
-        taskComposable(navigateToListScreen = screen.list)
+        taskComposable(navigateToListScreen = screen.list, sharedViewModel = sharedViewModel)
     }
 }

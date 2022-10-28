@@ -10,5 +10,10 @@
     <string name="close_icon">Close icon</string>
     <string name="sad_face_message">Sad face message</string>
     <string name="no_task_found">No tasks found</string>
+    <string name="task_add">Add task</string>
+    <string name="arrow_back">Back arrow</string>
+    <string name="delete_icon">Delete icon</string>
+    <string name="upate_icon">Update icon</string>
+
 
 </resources>
