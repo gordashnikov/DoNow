@@ -17,6 +17,7 @@
     <string name="drop_down_arrow">Drop-down arrow</string>
     <string name="title">Titile</string>
     <string name="description">Description</string>
+    <string name="blank_fields_error">The fields should not be blank</string>
 
 
 </resources>
