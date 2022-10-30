@@ -1,4 +1,4 @@
-package com.rustyrobot.donow.data.navigation
+package com.rustyrobot.donow.navigation
 
 import androidx.navigation.NavHostController
 import com.rustyrobot.donow.util.Action

@@ -1,4 +1,4 @@
-package com.rustyrobot.donow.data.navigation.destinations
+package com.rustyrobot.donow.navigation.destinations
 
 import androidx.compose.material.ExperimentalMaterialApi
 import androidx.navigation.NavGraphBuilder

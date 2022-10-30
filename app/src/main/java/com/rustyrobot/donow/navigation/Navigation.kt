@@ -1,12 +1,12 @@
-package com.rustyrobot.donow.data.navigation
+package com.rustyrobot.donow.navigation
 
 import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
-import com.rustyrobot.donow.data.navigation.destinations.listComposable
-import com.rustyrobot.donow.data.navigation.destinations.taskComposable
+import com.rustyrobot.donow.navigation.destinations.listComposable
+import com.rustyrobot.donow.navigation.destinations.taskComposable
 import com.rustyrobot.donow.ui.viewmodels.SharedViewModel
 import com.rustyrobot.donow.util.Constants.LIST_SCREEN
 
