@@ -6,11 +6,12 @@ import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material.icons.filled.Check
 import androidx.compose.material.icons.filled.Close
 import androidx.compose.material.icons.filled.Delete
-import androidx.compose.runtime.Composable
+import androidx.compose.runtime.*
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import com.rustyrobot.donow.R
+import com.rustyrobot.donow.components.DisplayAlertDialog
 import com.rustyrobot.donow.data.models.Priority
 import com.rustyrobot.donow.data.models.ToDoTask
 import com.rustyrobot.donow.ui.theme.topAppBarBackgroundColor
@@ -96,10 +97,31 @@ fun ExistingTaskBar(
         },
         backgroundColor = MaterialTheme.colors.topAppBarBackgroundColor,
         actions = {
-            DeleteAction(onDeleteClicked = navigateToListScreen)
-            UpdateAction(onUpdateClicked = navigateToListScreen)
+            ExistingTaskAppBarActions(
+                selectedTask = selectedTask,
+                navigateToListScreen = navigateToListScreen
+            )
         }
     )
+}
+
+@Composable
+fun ExistingTaskAppBarActions(
+    selectedTask: ToDoTask,
+    navigateToListScreen: (Action) -> Unit
+) {
+    var openDialog by remember { mutableStateOf(false) }
+
+    DisplayAlertDialog(
+        title = stringResource(id = R.string.delete_task, selectedTask.title),
+        message = stringResource(id = R.string.delete_task_confirmation, selectedTask.title),
+        openDialog = openDialog,
+        closeDialog = { openDialog = false },
+        onYesClicked = { navigateToListScreen(Action.DELETE) }
+    )
+
+    DeleteAction(onDeleteClicked = { openDialog = true })
+    UpdateAction(onUpdateClicked = navigateToListScreen)
 }
 
 @Composable
@@ -116,9 +138,9 @@ fun CloseAction(onCloseClicked: (Action) -> Unit) {
 }
 
 @Composable
-fun DeleteAction(onDeleteClicked: (Action) -> Unit) {
+fun DeleteAction(onDeleteClicked: () -> Unit) {
     IconButton(onClick = {
-        onDeleteClicked(Action.DELETE)
+        onDeleteClicked()
     }) {
         Icon(
             imageVector = Icons.Filled.Delete,
@@ -135,7 +157,7 @@ fun UpdateAction(onUpdateClicked: (Action) -> Unit) {
     }) {
         Icon(
             imageVector = Icons.Filled.Check,
-            contentDescription = stringResource(R.string.upate_icon),
+            contentDescription = stringResource(R.string.update_icon),
             tint = MaterialTheme.colors.topAppBarContentColor
         )
     }

@@ -1,23 +1,27 @@
 <resources>
     <string name="add_button">Add button</string>
     <string name="app_name">DoNow</string>
-    <string name="delete_all">Delete all</string>
+    <string name="arrow_back">Back arrow</string>
+    <string name="blank_fields_error">The fields should not be blank</string>
+    <string name="close_icon">Close icon</string>
+    <string name="delete_all_label">Delete all</string>
+    <string name="delete_all_tasks">Delete all tasks?</string>
+    <string name="delete_all_tasks_confirmation">Are you sure you want to delete all tasks? There is no going back from this! </string>
+    <string name="delete_icon">Delete icon</string>
+    <string name="delete_task">Delete \'%1$s\'?</string>
+    <string name="delete_task_confirmation">Are you sure you want to delete \'%1$s\'?</string>
+    <string name="description">Description</string>
+    <string name="drop_down_arrow">Drop-down arrow</string>
+    <string name="no">No</string>
+    <string name="no_task_found">No tasks found</string>
+    <string name="sad_face_message">Sad face message</string>
     <string name="search">Search</string>
     <string name="search_icon">Search icon</string>
     <string name="search_tasks">Search tasks</string>
     <string name="sort_tasks">Sort tasks</string>
-    <string name="tasks">Tasks</string>
-    <string name="close_icon">Close icon</string>
-    <string name="sad_face_message">Sad face message</string>
-    <string name="no_task_found">No tasks found</string>
     <string name="task_add">Add task</string>
-    <string name="arrow_back">Back arrow</string>
-    <string name="delete_icon">Delete icon</string>
-    <string name="upate_icon">Update icon</string>
-    <string name="drop_down_arrow">Drop-down arrow</string>
-    <string name="title">Titile</string>
-    <string name="description">Description</string>
-    <string name="blank_fields_error">The fields should not be blank</string>
-
-
+    <string name="tasks">Tasks</string>
+    <string name="title">Title</string>
+    <string name="update_icon">Update icon</string>
+    <string name="yes">Yes</string>
 </resources>

@@ -1,5 +1,6 @@
 package com.rustyrobot.donow.ui.screens.task
 
+import android.annotation.SuppressLint
 import android.content.Context
 import android.widget.Toast
 import androidx.compose.material.Scaffold
@@ -12,6 +13,7 @@ import com.rustyrobot.donow.data.models.ToDoTask
 import com.rustyrobot.donow.ui.viewmodels.SharedViewModel
 import com.rustyrobot.donow.util.Action
 
+@SuppressLint("UnusedMaterialScaffoldPaddingParameter")
 @Composable
 fun TaskScreen(
     selectedTask: ToDoTask?,
@@ -42,7 +44,7 @@ fun TaskScreen(
                 }
             )
         },
-        content = { _ ->
+        content = {
             TaskContent(
                 title = title,
                 onTitleChange = {
@@ -62,5 +64,6 @@ fun TaskScreen(
 }
 
 fun displayToast(context: Context) {
-    Toast.makeText(context, context.getString(R.string.blank_fields_error), Toast.LENGTH_LONG).show()
+    Toast.makeText(context, context.getString(R.string.blank_fields_error), Toast.LENGTH_LONG)
+        .show()
 }

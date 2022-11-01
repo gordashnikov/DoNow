@@ -35,6 +35,10 @@ class SharedViewModel @Inject constructor(private val repository: ToDoRepository
     private val _allTasks = MutableStateFlow<RequestState<List<ToDoTask>>>(RequestState.Idle)
     val allTasks: StateFlow<RequestState<List<ToDoTask>>> = _allTasks
 
+    private val _searchedTasks = MutableStateFlow<RequestState<List<ToDoTask>>>(RequestState.Idle)
+    val searchedTasks: StateFlow<RequestState<List<ToDoTask>>> = _searchedTasks
+
+
     private val _selectedTask: MutableStateFlow<ToDoTask?> = MutableStateFlow(null)
     val selectedTask: StateFlow<ToDoTask?> = _selectedTask
 
@@ -46,8 +50,8 @@ class SharedViewModel @Inject constructor(private val repository: ToDoRepository
                 priority = priority.value
             )
             repository.addTask(toDoTask = toDoTask)
-
         }
+        searchAppBarState.value = SearchAppBarState.CLOSED
     }
 
     private fun updateTask() {
@@ -75,11 +79,13 @@ class SharedViewModel @Inject constructor(private val repository: ToDoRepository
     }
 
 
+
     fun handleDatabaseActions(action: Action) {
         when (action) {
             Action.ADD -> addTask()
             Action.UPDATE -> updateTask()
             Action.DELETE -> deleteTask()
+            Action.DELETE_ALL -> deleteAllTasks()
             Action.UNDO -> addTask()
             else -> {}
         }
@@ -97,6 +103,20 @@ class SharedViewModel @Inject constructor(private val repository: ToDoRepository
         } catch (error: Exception) {
             _allTasks.value = RequestState.Error(error)
         }
+    }
+
+    fun searchInDatabase(searchQuery: String) {
+        _searchedTasks.value = RequestState.Loading
+        try {
+            viewModelScope.launch {
+                repository.searchInDatabase(searchQuery = "%$searchQuery%").collect {
+                    _searchedTasks.value = RequestState.Success(it)
+                }
+            }
+        } catch (error: Exception) {
+            _searchedTasks.value = RequestState.Error(error)
+        }
+        searchAppBarState.value = SearchAppBarState.TRIGGERED
     }
 
     fun getTask(taskId: Int) {
@@ -119,6 +139,14 @@ class SharedViewModel @Inject constructor(private val repository: ToDoRepository
         if (newTitle.length <= MAX_TITLE_LENGTH) {
             title.value = newTitle
         }
+    }
+
+    private fun deleteAllTasks() {
+        viewModelScope.launch(Dispatchers.IO) {
+            repository.deleteAllTasks()
+
+        }
+
     }
 
     fun validateFields() = title.value.isNotEmpty() && description.value.isNotEmpty()

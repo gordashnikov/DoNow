@@ -19,10 +19,12 @@ import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.tooling.preview.Preview
 import com.rustyrobot.donow.R
+import com.rustyrobot.donow.components.DisplayAlertDialog
 import com.rustyrobot.donow.components.PriorityItem
 import com.rustyrobot.donow.data.models.Priority
 import com.rustyrobot.donow.ui.theme.*
 import com.rustyrobot.donow.ui.viewmodels.SharedViewModel
+import com.rustyrobot.donow.util.Action
 import com.rustyrobot.donow.util.SearchAppBarState
 import com.rustyrobot.donow.util.TrailingIconState
 
@@ -39,7 +41,9 @@ fun ListAppBar(
                     sharedViewModel.searchAppBarState.value = SearchAppBarState.OPENED
                 },
                 onSortClicked = {},
-                onDeleteClicked = {}
+                onDeleteAllConfirmed = {
+                    sharedViewModel.action.value = Action.DELETE_ALL
+                }
             )
         }
         else -> {
@@ -52,7 +56,7 @@ fun ListAppBar(
                     sharedViewModel.searchAppBarState.value = SearchAppBarState.CLOSED
                     sharedViewModel.searchTextState.value = ""
                 },
-                onSearchClicked = {}
+                onSearchClicked = { sharedViewModel.searchInDatabase(searchQuery = it) }
             )
         }
     }
@@ -62,7 +66,7 @@ fun ListAppBar(
 fun DefaultListAppBar(
     onSearchClicked: () -> Unit,
     onSortClicked: (priority: Priority) -> Unit,
-    onDeleteClicked: () -> Unit
+    onDeleteAllConfirmed: () -> Unit
 ) {
     TopAppBar(
         title = {
@@ -75,7 +79,7 @@ fun DefaultListAppBar(
             ListAppBarActions(
                 onSearchClicked = onSearchClicked,
                 onSortClicked = onSortClicked,
-                onDeleteClicked = onDeleteClicked
+                onDeleteAllConfirmed = onDeleteAllConfirmed
             )
         },
         backgroundColor = MaterialTheme.colors.topAppBarBackgroundColor
@@ -86,11 +90,23 @@ fun DefaultListAppBar(
 fun ListAppBarActions(
     onSearchClicked: () -> Unit,
     onSortClicked: (priority: Priority) -> Unit,
-    onDeleteClicked: () -> Unit
+    onDeleteAllConfirmed: () -> Unit
 ) {
+    var openDialog by remember {
+        mutableStateOf(false)
+    }
+
+    DisplayAlertDialog(
+        title = stringResource(id = R.string.delete_all_tasks),
+        message = stringResource(id = R.string.delete_all_tasks_confirmation),
+        openDialog = openDialog,
+        closeDialog = { openDialog = false },
+        onYesClicked = { onDeleteAllConfirmed() }
+    )
+
     SearchAction(onSearchClicked = onSearchClicked)
     SortAction(onSortClicked = onSortClicked)
-    DeleteAllAction(onDeleteClicked = onDeleteClicked)
+    DeleteAllAction(onDeleteAllConfirmed = { openDialog = true })
 }
 
 @Composable
@@ -144,7 +160,7 @@ fun SortAction(onSortClicked: (priority: Priority) -> Unit) {
 }
 
 @Composable
-fun DeleteAllAction(onDeleteClicked: () -> Unit) {
+fun DeleteAllAction(onDeleteAllConfirmed: () -> Unit) {
 
     var expanded by remember {
         mutableStateOf(false)
@@ -153,7 +169,7 @@ fun DeleteAllAction(onDeleteClicked: () -> Unit) {
     IconButton(onClick = { expanded = true }) {
         Icon(
             painter = painterResource(id = R.drawable.ic_vertical_menu),
-            contentDescription = stringResource(R.string.delete_all),
+            contentDescription = stringResource(R.string.delete_all_label),
             tint = MaterialTheme.colors.topAppBarContentColor
         )
         DropdownMenu(
@@ -162,11 +178,11 @@ fun DeleteAllAction(onDeleteClicked: () -> Unit) {
         ) {
             DropdownMenuItem(onClick = {
                 expanded = false
-                onDeleteClicked()
+                onDeleteAllConfirmed()
             }) {
                 Text(
                     modifier = Modifier.padding(start = LARGE_PADDING),
-                    text = stringResource(R.string.delete_all),
+                    text = stringResource(R.string.delete_all_label),
                     style = Typography.subtitle2
                 )
             }
@@ -278,7 +294,7 @@ private fun DefaultListAppBarPreview() {
     DefaultListAppBar(
         onSearchClicked = {},
         onSortClicked = {},
-        onDeleteClicked = {}
+        onDeleteAllConfirmed = {}
     )
 }
 

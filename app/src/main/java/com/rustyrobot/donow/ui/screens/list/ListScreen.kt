@@ -1,5 +1,6 @@
 package com.rustyrobot.donow.ui.screens.list
 
+import android.annotation.SuppressLint
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
@@ -13,6 +14,7 @@ import com.rustyrobot.donow.util.Action
 import com.rustyrobot.donow.util.SearchAppBarState
 import kotlinx.coroutines.launch
 
+@SuppressLint("UnusedMaterialScaffoldPaddingParameter")
 @ExperimentalMaterialApi
 @Composable
 fun ListScreen(
@@ -26,6 +28,7 @@ fun ListScreen(
     val action by sharedViewModel.action
 
     val allTasks by sharedViewModel.allTasks.collectAsState()
+    val searchedTasks by sharedViewModel.searchedTasks.collectAsState()
     val searchAppBarState: SearchAppBarState by sharedViewModel.searchAppBarState
     val searchTextState: String by sharedViewModel.searchTextState
     val scaffoldState = rememberScaffoldState()
@@ -47,9 +50,11 @@ fun ListScreen(
                 searchTextState = searchTextState
             )
         },
-        content = { _ ->
+        content = {
             ListContent(
-                tasks = allTasks,
+                allTasks = allTasks,
+                searchedTasks = searchedTasks,
+                searchAppBarState = searchAppBarState,
                 navigateToTaskScreen = navigateToTaskScreen
             )
         },
@@ -89,7 +94,7 @@ fun DisplaySnackBar(
         if (action != Action.NO_ACTION) {
             scope.launch {
                 val snackBarResult = scaffoldState.snackbarHostState.showSnackbar(
-                    message = "${action.name}: $taskTitle",
+                    message = setMessage(action = action, title = taskTitle),
                     actionLabel = setActionLabel(action = action)
                 )
                 undoDeletedTask(
@@ -99,6 +104,13 @@ fun DisplaySnackBar(
                 )
             }
         }
+    }
+}
+
+private fun setMessage(action: Action, title: String): String {
+    return when (action) {
+        Action.DELETE_ALL -> "All tasks removed"
+        else -> "${action.name}: $title"
     }
 }
 
