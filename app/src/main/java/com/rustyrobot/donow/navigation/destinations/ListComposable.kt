@@ -1,17 +1,19 @@
 package com.rustyrobot.donow.navigation.destinations
 
+import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.runtime.LaunchedEffect
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavType
-import androidx.navigation.compose.composable
 import androidx.navigation.navArgument
+import com.google.accompanist.navigation.animation.composable
 import com.rustyrobot.donow.ui.screens.list.ListScreen
 import com.rustyrobot.donow.ui.viewmodels.SharedViewModel
 import com.rustyrobot.donow.util.Constants.LIST_ARGUMENT_KEY
 import com.rustyrobot.donow.util.Constants.LIST_SCREEN
 import com.rustyrobot.donow.util.toAction
 
+@ExperimentalAnimationApi
 @ExperimentalMaterialApi
 fun NavGraphBuilder.listComposable(
     navigateToTaskScreen: (taskId: Int) -> Unit,
