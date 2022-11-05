@@ -17,6 +17,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import com.rustyrobot.donow.R
 import com.rustyrobot.donow.ui.theme.LOGO_HEIGHT
@@ -46,6 +47,13 @@ fun SplashScreen(navigateToListScreen: () -> Unit) {
         delay(SPLASH_SCREEN_DELAY)
         navigateToListScreen()
     }
+    
+    Splash(offSetState = offSetState, alphaState = alphaState)
+
+}
+
+@Composable
+fun Splash(offSetState: Dp, alphaState: Float) {
     Box(
         modifier = Modifier
             .fillMaxSize()
